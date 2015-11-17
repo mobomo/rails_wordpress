@@ -7,11 +7,13 @@
 # | term_group | bigint(10)          | NO   |     | 0       |                |
 # +------------+---------------------+------+-----+---------+----------------+
 module Wordpress
-  class Term < ActiveRecord::Base
+  class Term < WordpressDatabase
+    has_many :categories, class_name: "Wordpress::Category"
+
     self.table_name = "wp_terms"
     before_save :set_slug_value
     validates :slug, uniqueness: true
-    
+
     def set_slug_value
       self.slug = self.name.parameterize
     end

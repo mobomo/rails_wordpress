@@ -1,6 +1,8 @@
 module Wordpress
   class Category < Taxonomy
     has_many :sub_categories, class_name: "Wordpress::Category", foreign_key: :parent, primary_key: :id
+
+    belongs_to :term, class_name: "Wordpress::Term"
     
     def self.cloud
       cats = all.reject{|r| r.posts.empty?}
