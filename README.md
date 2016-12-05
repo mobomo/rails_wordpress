@@ -31,8 +31,7 @@ and then:
 bundle install
 ```
 ## DB setup
-Assuming the wordpress blog db is on same host and mysql server
-open database.yml and set another entity as rails_blog
+Open database.yml and set another entity as rails_blog
 
 ```
 rails_blog:
