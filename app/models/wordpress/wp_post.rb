@@ -16,6 +16,7 @@ module Wordpress
     has_many :relationships, foreign_key: "object_id"
     has_many :tags, class_name: "PostTag", through: :relationships, source: :taxonomy, :dependent => :destroy
     has_many :categories, class_name: "Category", through: :relationships, source: :taxonomy, :dependent => :destroy
+    has_many :postmeta , foreign_key: 'post_id'
     
     belongs_to :author, class_name: "User", foreign_key: "post_author"
 
@@ -190,6 +191,12 @@ module Wordpress
       else
         assign_category_names category_list
       end
-    end  
+    end
+
+    def featured_image
+      post_meta = postmeta.where(meta_key: '_thumbnail_id').last
+      attchment = Wordpress::Attachment.where(id: post_meta.meta_value).last if post_meta
+      return attchment.guid if attchment
+    end
   end
 end
